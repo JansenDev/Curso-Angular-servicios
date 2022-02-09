@@ -1,6 +1,11 @@
 <p>img works!, {{ user }}</p>
-<img [src]="image" alt="" *ngIf="image else notFoundUser" />
+<img
+  (load)="onLoaded()"
+  (error)="imgError()"
+  [src]="image"
+  *ngIf="image; else notFoundUser"
+/>
 
-<ng-template #notFoundUser >
-  <img src="https://www.m2crowd.com/core/i/placeholder.png" alt="">
+<ng-template #notFoundUser>
+  <img [src]="imageDefault" alt="" />
 </ng-template>
