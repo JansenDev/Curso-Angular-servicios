@@ -1,7 +1,14 @@
-<h1>My component hello world {{ user }}</h1>
+
+  <app-product
+    [product]="product"
+    *ngFor="let product of products"
+  ></app-product>
+
+
+<!-- <h1>My component hello world {{ user }}</h1>
 
 <input type="text" [(ngModel)]="image" />
 
 <app-img (loaded)="onLoaded($event)" [image]="image" [user]="user"></app-img>
 <br>
-inParent: {{inParent}}
+inParent: {{inParent}} -->
