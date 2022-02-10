@@ -25,7 +25,6 @@ export class ImgComponent implements OnInit {
   }
 
   onLoaded() {
-    console.log('Log Hijo');
     this.loaded.emit(this.image);
   }
 }

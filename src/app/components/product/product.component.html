@@ -1,3 +1,9 @@
-<h1>{{ product.id }}. {{ product.name }}</h1>
-<img width="200" [src]="product.image" alt="Product-iamge"><br>
-Price: {{product.price}}
+<div class="product-item">
+  <button (click)="onAddProduct_cart()">Add cart</button>
+
+  <p>{{ product.id }}. {{ product.title | vowelToNumber}}</p>
+
+  <app-img [image]="product.image"></app-img>
+
+  Price: {{ product.price | currency: "S/." }}
+</div>
