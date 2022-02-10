@@ -1,9 +1,10 @@
 <div class="product-item">
   <button (click)="onAddProduct_cart()">Add cart</button>
 
-  <p>{{ product.id }}. {{ product.title | vowelToNumber}}</p>
+  <p>{{ product.id }}. {{ product.title }}</p>
 
   <app-img [image]="product.image"></app-img>
+  <p appHighlight >{{ product.description }}</p>
 
   Price: {{ product.price | currency: "S/." }}
 </div>
