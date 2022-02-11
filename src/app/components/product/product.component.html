@@ -1,5 +1,4 @@
 <div class="product-item">
-  <button (click)="onAddProduct_cart()">Add cart</button>
 
   <p>{{ product.id }}. {{ product.title }}</p>
 
@@ -7,4 +6,6 @@
   <p appHighlight >{{ product.description }}</p>
 
   Price: {{ product.price | currency: "S/." }}
+
+  <button (click)="onAddProduct_cart()">Add cart</button>
 </div>

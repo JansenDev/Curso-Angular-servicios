@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-img',
   templateUrl: './img.component.html',
   styleUrls: ['./img.component.scss'],
 })
-export class ImgComponent implements OnInit {
+export class ImgComponent {
   @Input()
   image = '';
   @Input()
@@ -17,7 +17,6 @@ export class ImgComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
 
   imgError() {
     console.log('error al cargar la imagen');
