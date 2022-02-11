@@ -1,13 +1,36 @@
 <p>Products List</p>
 
-<div >Total carrito: {{ shoppingCart.length }}</div>
-<div>Precio total: S/.{{ priceTotal_cart | number: '1.2'  }}</div>
-
-
+<div>Total carrito: {{ shoppingCart.length }}</div>
+<div>Precio total: S/.{{ priceTotal_cart | number: "1.2" }}</div>
+<button (click)="onAddNewProduct()">Add New Product</button>
 <div class="products-grid">
   <app-product
     [product]="product"
     *ngFor="let product of products"
     (addProduct_cart)="addProduct_cart($event)"
+    (getProductId)="getProductDetail($event)"
   ></app-product>
+</div>
+
+<div class="product-detail" [class.active]="showProductDetail">
+  <button (click)="btnToogleShowProductDetail()">Close</button>
+
+  <h1>{{ productSelected.title }}</h1>
+  <button (click)="onUpdateNewProduct()">Edit product</button>
+  <button (click)="onDeleteProduct()">delete product</button>
+
+  <swiper [slidesPerView]="1">
+    <ng-template swiperSlide>
+      <img [src]="productSelected.image" alt="" />
+    </ng-template>
+
+    <ng-template swiperSlide>
+      <img [src]="productSelected.image" alt="" />
+    </ng-template>
+
+    <ng-template swiperSlide>
+      <img [src]="productSelected.image" alt="" />
+    </ng-template>
+  </swiper>
+  <p>{{ productSelected.description }}</p>
 </div>

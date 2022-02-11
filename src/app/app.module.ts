@@ -15,6 +15,7 @@ import { ReversePipe } from './pipe/reverse.pipe';
 import { TimeAgoPipe } from './pipe/time-ago.pipe';
 import { VowelToNumberPipe } from './pipe/vowel-to-number.pipe';
 import { HighlightDirective } from './directive/highlight.directive';
+import { SwiperModule } from 'swiper/angular';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,13 @@ import { HighlightDirective } from './directive/highlight.directive';
     VowelToNumberPipe,
     HighlightDirective,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    SwiperModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

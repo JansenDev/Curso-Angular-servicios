@@ -10,14 +10,7 @@ export class ProductComponent {
   constructor() {}
 
   @Input()
-  product: Product = {
-    id: '',
-    title: '',
-    price: 0,
-    image: '',
-    description: '',
-    category: '',
-  };
+  product: Product = {} as Product;
 
   @Input()
   image = '';
@@ -25,7 +18,14 @@ export class ProductComponent {
   @Output()
   addProduct_cart = new EventEmitter<Product>();
 
+  @Output()
+  getProductId =new EventEmitter<string>();
+
   onAddProduct_cart() {
     this.addProduct_cart.emit(this.product);
+  }
+
+  onShowDetailProduct(){
+    this.getProductId.emit(this.product.id)
   }
 }
