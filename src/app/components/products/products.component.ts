@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product, ProductDTO, UpdateProductDTO } from '../models/product.model';
 import { StoreService } from '../../service/store.service';
 import { ProductsService } from '../../service/products.service';
+import { literal } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-products',
@@ -16,12 +17,16 @@ export class ProductsComponent implements OnInit {
     this.shoppingCart = this.storeService.getShopping_cart();
   }
 
-  ngOnInit(): void {
-    this.productsService.getAllProducts().subscribe((data) => {
-      this.products = data;
-    });
-  }
+  limit = 5;
+  offset = this.limit;
 
+  ngOnInit(): void {
+    this.productsService
+      .getAllProducts(this.limit,this.offset)
+      .subscribe((data) => {
+        this.products = data;
+      });
+  }
   products: Product[] = [];
   shoppingCart: Product[] = [];
   priceTotal_cart = 0;
@@ -97,5 +102,15 @@ export class ProductsComponent implements OnInit {
       this.products.splice(productIndex, 1);
     });
     this.showProductDetail = false;
+  }
+
+  onLoadMore() {
+    this.productsService
+      .getProductByParams(this.limit, this.offset)
+      .subscribe((products: Product[]) => {
+        console.log(products);
+        this.limit += 5
+        this.products = this.products.concat(products)
+      });
   }
 }
