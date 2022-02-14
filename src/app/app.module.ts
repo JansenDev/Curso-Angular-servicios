@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 // modules addded
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // components
 import { ImgComponent } from './components/img/img.component';
 import { ProductComponent } from './components/product/product.component';
@@ -17,7 +17,11 @@ import { VowelToNumberPipe } from './pipe/vowel-to-number.pipe';
 import { HighlightDirective } from './directive/highlight.directive';
 import { SwiperModule } from 'swiper/angular';
 
+import { TokenInterceptor } from './interceptor/token.interceptor';
+import { TimeInterceptor } from './interceptor/time.interceptor';
+
 @NgModule({
+  // ^Componentes, pipes, servicios y directivas
   declarations: [
     AppComponent,
     ImgComponent,
@@ -36,7 +40,15 @@ import { SwiperModule } from 'swiper/angular';
     HttpClientModule,
     SwiperModule,
   ],
-  providers: [],
+  // ^Aqui se agrega los interceptores de requests
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TimeInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

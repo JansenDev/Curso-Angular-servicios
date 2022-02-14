@@ -12,6 +12,9 @@ import {
 } from '../components/models/product.model';
 import { catchError, map } from 'rxjs/operators';
 import { throwError, switchMap, zip } from 'rxjs';
+import {
+  context_interceptor,
+} from '../interceptor/time.interceptor';
 
 @Injectable({
   providedIn: 'root',
@@ -28,13 +31,18 @@ export class ProductsService {
       params = params.set('limit', limit);
       params = params.set('offset', offset);
     }
-    return this.httpClient.get<Product[]>(this.uri_product, { params }).pipe(
-      map((products) =>
-        products.map((item) => {
-          return { ...item, taxes: 0.19 * item.price };
-        })
-      )
-    );
+    return this.httpClient
+      .get<Product[]>(this.uri_product, {
+        params,
+        context: context_interceptor(),
+      })
+      .pipe(
+        map((products) =>
+          products.map((item) => {
+            return { ...item, taxes: 0.19 * item.price };
+          })
+        )
+      );
   }
 
   getProductbyId(idProduct: string) {
