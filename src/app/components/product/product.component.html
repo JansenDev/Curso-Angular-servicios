@@ -5,7 +5,7 @@
   <!-- <p appHighlight >{{ product.description }}</p> -->
 
   <p>Price: {{ product.price | currency: "S/." }}</p>
-
+  <p>Taxes: {{ product?.taxes | currency: "S/." }}</p>
   <button (click)="onShowDetailProduct()">Show detail</button>
   <button (click)="onAddProduct_cart()">Add cart</button>
 </div>

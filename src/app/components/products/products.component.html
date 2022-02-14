@@ -3,6 +3,8 @@
 <div>Total carrito: {{ shoppingCart.length }}</div>
 <div>Precio total: S/.{{ priceTotal_cart | number: "1.2" }}</div>
 <button (click)="onAddNewProduct()">Add New Product</button>
+<button (click)="getProductDetail('pene')">Add New Error Product</button>
+{{ statusDetail }}
 <div class="products-grid">
   <app-product
     [product]="product"

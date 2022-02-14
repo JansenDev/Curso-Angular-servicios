@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product, ProductDTO, UpdateProductDTO } from '../models/product.model';
 import { StoreService } from '../../service/store.service';
 import { ProductsService } from '../../service/products.service';
-import { literal } from '@angular/compiler/src/output/output_ast';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-products',
@@ -22,7 +22,7 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.productsService
-      .getAllProducts(this.limit,this.offset)
+      .getAllProducts(this.limit, this.offset)
       .subscribe((data) => {
         this.products = data;
       });
@@ -31,7 +31,13 @@ export class ProductsComponent implements OnInit {
   shoppingCart: Product[] = [];
   priceTotal_cart = 0;
   showProductDetail = false;
-  productSelected: Product = {} as Product;
+  productSelected: Product = {
+    category: 'test category',
+    image: 'https://i.pravatar.cc',
+    price: 0,
+    description: 'test description',
+    title: 'test title',
+  } as Product;
 
   private createProductDTO: ProductDTO = {
     title: 'Nuevo Producto',
@@ -40,6 +46,10 @@ export class ProductsComponent implements OnInit {
     image: 'https://i.pravatar.cc',
     category: 'new category',
   };
+
+  statusDetail: 'loading' | 'success' | 'error' | 'init' = 'init';
+
+
 
   addProduct_cart(product: Product) {
     this.storeService.addProduct_cart(product);
@@ -51,12 +61,20 @@ export class ProductsComponent implements OnInit {
   }
 
   getProductDetail(idProduct: string) {
-    this.productsService
-      .getProductbyId(idProduct)
-      .subscribe((productFounded: Product) => {
-        this.showProductDetail = true;
-        this.productSelected = productFounded;
-      });
+    this.productsService.getProductbyId(idProduct).subscribe({
+      next: (product) => this.getProductDetail_ok(product),
+      error: (err: HttpErrorResponse) => this.getProductDetail_error(err),
+    });
+  }
+
+  getProductDetail_ok(productFounded: Product) {
+    this.showProductDetail = true;
+    this.productSelected = productFounded;
+  }
+
+  getProductDetail_error(errorResponse: HttpErrorResponse) {
+    console.log(errorResponse.message);
+    this.statusDetail = 'error';
   }
 
   onAddNewProduct() {
@@ -109,8 +127,8 @@ export class ProductsComponent implements OnInit {
       .getProductByParams(this.limit, this.offset)
       .subscribe((products: Product[]) => {
         console.log(products);
-        this.limit += 5
-        this.products = this.products.concat(products)
+        this.limit += 5;
+        this.products = this.products.concat(products);
       });
   }
 }

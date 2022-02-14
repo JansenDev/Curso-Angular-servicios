@@ -5,6 +5,7 @@ export interface Product {
   image: string;
   description: string;
   category: string;
+  taxes?: number;
 }
 
 // Extiende product y omite id y category
