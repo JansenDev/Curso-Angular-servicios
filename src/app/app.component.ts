@@ -4,6 +4,7 @@ import {
   User,
   UserDTO,
 } from './components/models/user.model';
+import { FileService } from './service/file.service';
 import { UsersService } from './service/users.service';
 
 @Component({
@@ -16,8 +17,12 @@ export class AppComponent {
   user = 'Jhonatan';
   image = 'https://www.w3schools.com/howto/img_avatar.png';
   inParent = '';
+  imageUploadSrc = '';
 
-  constructor(private userService: UsersService) {}
+  constructor(
+    private userService: UsersService,
+    private fileService: FileService
+  ) {}
 
   onLoaded(data: string) {
     console.log('log Padre');
@@ -40,5 +45,30 @@ export class AppComponent {
       password: '12345',
     };
     return this.userService.login(credenciales);
+  }
+
+  dowloadFile() {
+    this.fileService
+      .getFile(
+        'My file from code.pdf',
+        'https://young-sands-07814.herokuapp.com/api/files/dummy.pdf',
+        'application/pdf'
+      )
+      .subscribe();
+  }
+
+  uploadFile(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const file = target.files?.item(0);
+
+    console.log(file);
+    this.imageUploadSrc = '';
+    if (file) {
+      this.fileService.uploadFile(file).subscribe((uploadResult) => {
+        console.log(uploadResult);
+
+        this.imageUploadSrc = uploadResult.location;
+      });
+    }
   }
 }

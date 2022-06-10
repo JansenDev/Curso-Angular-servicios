@@ -1,6 +1,11 @@
 <app-nav></app-nav>
 <button (click)="register()">Register</button>
 <button (click)="login()" >login</button>
+<br>
+<button (click)="dowloadFile()" >Dowload</button>
+<br>
+<input type="file" (change)="uploadFile($event)" >
+<img [src]="imageUploadSrc"  >
 <app-products></app-products>
 
 <!-- <h1>My component hello world {{ user }}</h1>
